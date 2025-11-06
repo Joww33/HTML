@@ -1,0 +1,128 @@
+<html>
+<head>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #00ff9d;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .cyber-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #00ff9d;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff9d;
+            margin-bottom: 1.5rem;
+        }
+
+        .cipher-machine {
+            display: grid;
+            gap: 1.5rem;
+            max-width: 600px;
+        }
+
+        input, button {
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff9d;
+            color: #00ff9d;
+            font-size: 1.1em;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            background: #00ff9d;
+            color: #16213e;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00ff9d;
+        }
+
+        .binary-background {
+            position: absolute;
+            font-size: 30em;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        .binary-background {
+            position: absolute;
+            font-size: 15em;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fons elements binaris-->
+    <div class="binary-background">01000011011010010110011001110010011000010110010001101111</div>
+    
+    
+    <div class="cyber-container">
+        <h1>XIFRAT DE CESAR </h1>
+        <div class="cipher-machine">
+            <input type="text" id="inputText" placeholder="Text a xifrar/desxifrar">
+            <input type="number" id="shift" placeholder="Clau (valor de desplacament)" min="1" max="25">
+            <button onclick="encrypt()">XIFRAR </button>
+            <button onclick="decrypt()">DESXIFRAR </button>
+            <input type="text" id="outputText" readonly>
+        </div>
+    </div>
+
+    <script>
+        function caesarCipher(text, shift, encrypt = true) {
+            return text.split('').map(char => {
+                let code = char.charCodeAt(0);
+                if (code >= 65 && code <= 90) {
+                    return String.fromCharCode(((code - 65 + (encrypt ? shift : -shift) + 26) % 26) + 65);
+                }
+                if (code >= 97 && code <= 122) {
+                    return String.fromCharCode(((code - 97 + (encrypt ? shift : -shift) + 26) % 26) + 97);
+                }
+                return char;
+            }).join('');
+        }
+
+        function encrypt() {
+            const text = document.getElementById('inputText').value;
+            const shift = parseInt(document.getElementById('shift').value);
+            document.getElementById('outputText').value = caesarCipher(text, shift);
+        }
+
+        function decrypt() {
+            const text = document.getElementById('inputText').value;
+            const shift = parseInt(document.getElementById('shift').value);
+            document.getElementById('outputText').value = caesarCipher(text, shift, false);
+        }
+    </script>
+</body>
+</html>
